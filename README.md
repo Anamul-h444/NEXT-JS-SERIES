@@ -1,41 +1,75 @@
 ## Next JS Documentation
 
 <a name='top'></a>
-| No | Content |
+| No | Subject |
 | --- | ---------------------------------------------------------------------- |
 | 1. | [What is rendering in web application ?](#rendering) |
-| 1. | [What is CSR?](#csr) |
-| 1. | [How CSR work?](#how_csr_work) |
-| 1. | [Benifit of CSR](#benifit_of_csr) |
-| 1. | [Side effect of CSR](#side_effect_of_csr) |
-| 1. | [Installation of next js](#installation) |
-| 2. | [How to use image from public directory?](#publicDir) |
-| 2. | [How to use global CSS?](#globalCSS) |
-| 2. | [How to use module CSS?](#moduleCSS) |
-| 2. | [Rules of client side rendering.](#css) |
-| 2. | [Rules of server side rendering](#ssr) |
-| 2. | [Rules of using both SSR & CSR](#ssrCsr) |
-| 2. | [When use CSR and when use SSR?](#rule) |
-| 2. | [Basic Routing](#basicRouting) |
-| 2. | [Nested Routing](#nestedRouting) |
-| 2. | [How to skip segment in Routing or group route?](#skipSegment) |
-| 2. | [Dynamic Routing?](#dynamicRounting) |
-| 2. | [Basic Link](#basicLink) |
-| 2. | [Use next-nprogress-bar libray for showing loader.](#loader) |
-| 2. | [How to style active link?.](#activeLink) |
-| 2. | [How to Pass query string with link and how to receive?](#queryString) |
-| 2. | [Link-replace property](#replace) |
-| 2. | [Link-prefetch property](#prefetch) |
-| 2. | [What is useRouter hook?](#useRouter) |
-| 2. | [Master Layout concept](#masterLayout) |
-| 2. | [Directory based layout](#directoryLayout) |
-| 2. | [Creating multiple root layout](#multipleRootLayout) |
-| 2. | [not-found.js directory](#notFound) |
-| 2. | [error.js directory](#errorHandle) |
-| 2. | [loading.js directory](#loading) |
-| 2. | [route.js directory](#route) |
-| 2. | [Process of Data fetching by SSR](#ssrDataFetch) |
-| 2. | [Process Data fetching by CSR](#csrDataFetch) |
+| 2. | [What is CSR?](#csr) |
+| 3. | [How CSR work?](#how_csr_work) |
+| 4. | [Benifit of CSR](#benifit_of_csr) |
+| 5. | [Side effect of CSR](#side_effect_of_csr) |
+| 6. | [What is SSR?](#what_is_ssr) |
+| 7. | [How CSR work?](#how_ssr_work) |
+| 8. | [Benifit of CSR](#benifit_of_ssr) |
+| 9. | [Side effect of CSR](#side_effect_of_ssr) |
+| 10. | [What is SSG?](#what_is_ssg) |
+| 11. | [How CSR work?](#how_ssg_work) |
+| 12. | [Benifit of CSR](#benifit_of_ssg) |
+| 13. | [What is ISR?](#what_is_isr) |
+| 14. | [How work ISR?](#how_isr_work) |
+| 15. | [Benifit of ISR?](#benifit_of_isr) |
+| 16. | [How to generate static from sever and chashed in brower?](#how_to_generate_static_from_server_and_cashed_in_brower) |
+| 17. | [How to generate static from sever and chashed in brower?](#how_to_generate_static_from_server_and_cashed_in_brower) |
+| 18. | [How to create static file in server when build?](#how_to_create_static_file_in_sever_when_build) |
+| 19. | [How to create static file during request with dynamic?](#how_to_create_static_file_during_request_with_dynamic) |
+| 20. | [Installation of next js](#installation_of_next_js) |
+| 21. | [How to use image from public directory?](#how-to-use-image-from-public-directory) |
+| 22. | [How to use global CSS?](#how-use-global-css) |
+| 23. | [How to use module CSS?](#how-to-use-module-css) |
+| 24. | [Rules of client side rendering.](#rules-of-client-side-rendering) |
+| 25. | [Rules of server side rendering](#rules-of-server-side-rendering) |
+| 26. | [Rules of using both SSR & CSR](#rules-of-using-both-csr-and-ssr) |
+| 27. | [When use CSR and when use SSR?](#when-use-csr-and-when-use-ssr) |
+| 28. | [Basic Routing](#basic-routing) |
+| 29. | [Nested Routing](#nested-routing) |
+| 30. | [How to skip segment in Routing or group route?](#how-to-segment-in-routing) |
+| 31. | [Dynamic Routing?](#dynamic-routing) |
+| 32. | [Basic Link](#basic-link) |
+| 33. | [Use next-nprogress-bar libray for showing loader.](#use-next-progress-bar-libray) |
+| 34. | [How to style active link?.](#how-to-style-active-link) |
+| 35. | [How to Pass query string with link and how to receive?](#how-pass-query-string-with-link-and-how-to-receive) |
+| 36. | [Link-replace property](#link-replace-property) |
+| 37. | [What is useRouter hook?](#what-is-use-router-hook) |
+| 38. | [Master Layout concept](#master-layout-concept) |
+| 39. | [Directory based layout](#directory-based-layout) |
+| 40. | [Creating multiple root layout](#how-to-create-multiple-root-layout) |
+| 41. | [not-found.js directory](#not-found-directory) |
+| 42. | [error.js directory](#error-directory) |
+| 43. | [loading.js directory](#loading-directory) |
+| 44. | [route.js directory](#route-directory) |
+| 45. | [Process of Data fetching by SSR](#process-of-data-fatching-by-ssr) |
+| 46. | [Process of Data fetching by CSR](#process-of-data-fatching-by-csr) |
+| 47. | [Process of Data factching by sychronous way](#data-fatching-by-synchronous-way) |
+| 48. | [Process of Data factching by peralal way](#data-fatching-by-peralal) |
+| 49. | [next.config - How to use basepath?](#how-to-use-basePath) |
+| 50. | [next.config - How to use env?](#how-to-use-env) |
+| 51. | [next.config - How to set response headers?](#how-to-set-response-header) |
+| 52. | [next.config - How to set X-Frame option header?](#how-to-set-x-frame) |
+| 53. | [next.config - Content-Security-Policy header](#content-Security-Policy-header) |
+| 54. | [next.config - Permission-policy header](#permission-policy-header) |
+| 55. | [next.config - Strict-Transport-Security](#Strict-Transport-Security) |
+| 56. | [next.config - X-Content-Type-Options](#X-Content-Type-Options) |
+| 57. | [next.config - Powered By](#Powered-By) |
+| 58. | [next.config - Dist Dir Name](#Dist-Dir-Name) |
+| 59. | [next.config - Connection](#Connection) |
+| 60. | [next.config - Browser Source Maps](#Browser-Source-Maps) |
+| 61. | [next.config - Trailing Slash](#Trailing-Slash) |
+| 62. | [OPTIMIZATION - IMAGE-OPTIMIZATION](#IMAGE-OPTIMIZATION) |
+| 63. | [OPTIMIZATION - Google Font Inside Next.JS](#Google-Font-Inside) |
+| 64. | [OPTIMIZATION - Local Font Inside Next.JS](#Local-Font-Inside) |
+| 65. | [OPTIMIZATION - SCRIPT OPTIMIZATION](#SCRIPT) |
+| 66. | [OPTIMIZATION - STATIC ASSETS OPTIMIZATION](#STATIC-ASSETS) |
+| 67. | [OPTIMIZATION - Lazy Loading OPTIMIZATION](#LAZY-LOADING) |
 
 <a name='rendering'></a>
 
@@ -1583,3 +1617,169 @@ const nextConfig = {
 }
 };
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='content-Security-Policy-header'></a>
+
+### next.config - Content-Security-Policy header
+
+---
+
+<img src='./images/contentSecurity.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='permission-policy-header'></a>
+
+### next.config - Permission-policy header
+
+---
+
+<img src='./images/permssionPolicy.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Strict-Transport-Security'></a>
+
+### next.config - Strict-Transport-Security
+
+---
+
+<img src='./images/strictTransport.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='X-Content-Type-Options'></a>
+
+### next.config - X-Content-Type-Options
+
+---
+
+<img src='./images/x-content.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Powered By'></a>
+
+### next.config - Powered By
+
+---
+
+<img src='./images/powredBy.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Dist-Dir-Name'></a>
+
+### next.config - Dist Dir Name
+
+---
+
+<img src='./images/distDirName.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Connection'></a>
+
+### next.config - Connection
+
+---
+
+<img src='./images/connection.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Browser-Source-Maps'></a>
+
+### next.config - Browser Source Maps
+
+---
+
+<img src='./images/sourceMap.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Trailing-Slash'></a>
+
+### next.config - Trailing Slash
+
+---
+
+<img src='./images/trailingSlash.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='IMAGE-OPTIMIZATION'></a>
+
+### IMAGE OPTIMIZATION
+
+---
+
+- Next.js provides an Image component as part of its built-in image optimization system.
+- This system helps to improve performance by optimizing image loading for your application
+
+- Automatic Optimization: Images are optimized on-demand, as users request them.
+- Responsive: Different sizes and resolutions of images can be generated according to the
+  viewing device and screen size.
+- Efficient: Images are served in modern formats like WebP when the browser supports it.
+- Lazy-Loading: Offscreen images are not loaded until they come into the viewport, saving
+  bandwidth.
+
+<img src='./images/imageOptimize1.png'>
+<img src='./images/imageOptimize2.png'>
+<img src='./images/imageOptimize3.png'>
+<img src='./images/imageOptimize4.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Google-Font-Inside'></a>
+
+### Google Font Inside Next.JS
+
+---
+
+<img src='./images/optimize1.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Local-Font-Inside'></a>
+
+### Local Font Inside Next.JS
+
+---
+
+<img src='./images/optimize2.png'>
+<img src='./images/optimize3.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='SCRIPT'></a>
+
+### SCRIPT OPTIMIZATION
+
+---
+
+<img src='./images/script.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='STATIC-ASSETS'></a>
+
+### STATIC ASSETS OPTIMIZATION
+
+---
+
+<img src='./images/statics.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='LAZY-LOADING'></a>
+
+### LAZY LOADING
+
+---
+
+<img src='./images/lazyLoading.png'>
+
+[Go to top:arrow_up: ](#top)
