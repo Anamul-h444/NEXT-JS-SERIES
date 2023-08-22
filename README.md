@@ -1,36 +1,474 @@
 ## Next JS Documentation
 
-| No  | Content                                                                |
+<a name='top'></a>
+| No | Content |
 | --- | ---------------------------------------------------------------------- |
-| 1.  | [What is CSR? How its work?](#csr)                                     |
-| 1.  | [Installation of next js](#installation)                               |
-| 2.  | [How to use image from public directory?](#publicDir)                  |
-| 2.  | [How to use global CSS?](#globalCSS)                                   |
-| 2.  | [How to use module CSS?](#moduleCSS)                                   |
-| 2.  | [Rules of client side rendering.](#css)                                |
-| 2.  | [Rules of server side rendering](#ssr)                                 |
-| 2.  | [Rules of using both SSR & CSR](#ssrCsr)                               |
-| 2.  | [When use CSR and when use SSR?](#rule)                                |
-| 2.  | [Basic Routing](#basicRouting)                                         |
-| 2.  | [Nested Routing](#nestedRouting)                                       |
-| 2.  | [How to skip segment in Routing or group route?](#skipSegment)         |
-| 2.  | [Dynamic Routing?](#dynamicRounting)                                   |
-| 2.  | [Basic Link](#basicLink)                                               |
-| 2.  | [Use next-nprogress-bar libray for showing loader.](#loader)           |
-| 2.  | [How to style active link?.](#activeLink)                              |
-| 2.  | [How to Pass query string with link and how to receive?](#queryString) |
-| 2.  | [Link-replace property](#replace)                                      |
-| 2.  | [Link-prefetch property](#prefetch)                                    |
-| 2.  | [What is useRouter hook?](#useRouter)                                  |
-| 2.  | [Master Layout concept](#masterLayout)                                 |
-| 2.  | [Directory based layout](#directoryLayout)                             |
-| 2.  | [Creating multiple root layout](#multipleRootLayout)                   |
-| 2.  | [not-found.js directory](#notFound)                                    |
-| 2.  | [error.js directory](#errorHandle)                                     |
-| 2.  | [loading.js directory](#loading)                                       |
-| 2.  | [route.js directory](#route)                                           |
-| 2.  | [Process of Data fetching by SSR](#ssrDataFetch)                       |
-| 2.  | [Process Data fetching by CSR](#csrDataFetch)                          |
+| 1. | [What is rendering in web application ?](#rendering) |
+| 1. | [What is CSR?](#csr) |
+| 1. | [How CSR work?](#how_csr_work) |
+| 1. | [Benifit of CSR](#benifit_of_csr) |
+| 1. | [Side effect of CSR](#side_effect_of_csr) |
+| 1. | [Installation of next js](#installation) |
+| 2. | [How to use image from public directory?](#publicDir) |
+| 2. | [How to use global CSS?](#globalCSS) |
+| 2. | [How to use module CSS?](#moduleCSS) |
+| 2. | [Rules of client side rendering.](#css) |
+| 2. | [Rules of server side rendering](#ssr) |
+| 2. | [Rules of using both SSR & CSR](#ssrCsr) |
+| 2. | [When use CSR and when use SSR?](#rule) |
+| 2. | [Basic Routing](#basicRouting) |
+| 2. | [Nested Routing](#nestedRouting) |
+| 2. | [How to skip segment in Routing or group route?](#skipSegment) |
+| 2. | [Dynamic Routing?](#dynamicRounting) |
+| 2. | [Basic Link](#basicLink) |
+| 2. | [Use next-nprogress-bar libray for showing loader.](#loader) |
+| 2. | [How to style active link?.](#activeLink) |
+| 2. | [How to Pass query string with link and how to receive?](#queryString) |
+| 2. | [Link-replace property](#replace) |
+| 2. | [Link-prefetch property](#prefetch) |
+| 2. | [What is useRouter hook?](#useRouter) |
+| 2. | [Master Layout concept](#masterLayout) |
+| 2. | [Directory based layout](#directoryLayout) |
+| 2. | [Creating multiple root layout](#multipleRootLayout) |
+| 2. | [not-found.js directory](#notFound) |
+| 2. | [error.js directory](#errorHandle) |
+| 2. | [loading.js directory](#loading) |
+| 2. | [route.js directory](#route) |
+| 2. | [Process of Data fetching by SSR](#ssrDataFetch) |
+| 2. | [Process Data fetching by CSR](#csrDataFetch) |
+
+<a name='rendering'></a>
+
+### What is rendering in web application ?
+
+---
+
+Rendering in the context of web applications refers to the process of generating the final output, usually in the form of HTML, CSS, and JavaScript, that is displayed in a web browser. It involves taking raw data, templates, and dynamic content, and converting them into a format that can be visually presented to users.
+
+There are two main types of rendering in web applications:
+
+- CSR - Client side rendering
+- SSR - Server side rendering
+  - SSG - Static site generation
+  - ISR - Incremental Static Regeneration
+
+[Go to top:arrow_up: ](#top)
+
+<a name='csr'></a>
+
+### What is CSR? How its work?
+
+---
+
+**_What is CSR?_**
+
+- Client-side rendering (CSR) is an approach in web development where the rendering of content, including HTML, CSS, and data, is primarily handled by the web browser on the client's device using JavaScript.
+- This means that the initial HTML sent by the server is minimal, often just containing the basic structure and references to JavaScript files.
+- The browser then fetches data from APIs or other sources, processes it, and dynamically generates the content on the client side.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_csr_work'></a>
+
+**_How CSR work?_**
+
+Here's a step-by-step breakdown of how client-side rendering works with an example:
+
+_Initial Page Load:_
+
+- When a user enters a URL or clicks a link to a web page, the server sends a minimal HTML document to the browser as below:
+- This HTML document typically includes the basic structure of the page, along with references to external CSS and JavaScript files.
+
+```jsx
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client-Side Rendering Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app"></div>
+    <script src="app.js"></script>
+</body>
+</html>
+
+```
+
+_JavaScript Execution:_
+
+- The browser then starts executing the JavaScript code referenced in the HTML document.
+- This JavaScript code is responsible for fetching data from APIs, processing that data, and rendering it on the page.
+
+_Data Processing and Rendering:_
+
+- Once the data is fetched, the JavaScript code processes it and generates the necessary HTML dynamically.
+- This HTML is then inserted into the DOM (Document Object Model) of the page.
+
+_User Interaction:_
+
+- As the user interacts with the page, such as marking tasks as complete or adding new tasks, the JavaScript code handles these interactions by updating the DOM and possibly making additional API requests.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='benifit_of_csr'></a>
+
+**_Benifit of CSR:_**
+
+**_Interactive User Experience:_** CSR allows for highly interactive and dynamic user experiences. Changes to the content can be made without requiring a full page reload, providing a smoother and more seamless interaction.
+
+**_Reduced Server Load:_** Since much of the rendering process happens on the client side, the server is not burdened with generating HTML for every request. This can lead to better server scalability and reduced server load.
+
+**_Faster Subsequent Page Loads:_** Once the initial JavaScript files are cached by the browser, subsequent page loads can be faster since the client doesn't need to fetch those files again.
+
+**_Enhanced Caching:_** Modern browsers are capable of caching JavaScript files, CSS, and other assets. This means that after the initial load, users can benefit from faster load times for subsequent visits.
+
+**_Offline Capabilities:_** With appropriate design and use of service workers, CSR applications can work offline or in low-network conditions. Users can still access content and perform tasks even without a stable internet connection.
+
+**_Dynamic Data Fetching:_** CSR is well-suited for applications that rely heavily on dynamic data, as it allows for efficient fetching and updating of data without requiring full page reloads.
+
+**_Flexibility:_** Developers have more control over the rendering process and can implement custom animations, transitions, and other visual effects more easily.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='side_effect_of_csr'></a>
+
+## Side effects of CSR
+
+---
+
+**_Slower Initial Load Times:_** One of the most significant side effects of CSR is slower initial page load times. Since the browser needs to fetch JavaScript files and potentially make additional API requests before rendering content, the user might experience a delay in seeing the page's complete content.
+
+**_Search Engine Optimization (SEO) Challenges:_** Search engines often struggle to index content generated dynamically through JavaScript. This can negatively impact the discoverability of your website's content in search engine results.
+
+**_User Experience During Loading:_** During the initial load, users might see a blank or partially rendered page until the JavaScript files are fetched and executed. This can result in a poor user experience and confusion for users.
+
+**_Browser Compatibility:_** Different browsers might interpret JavaScript code differently, leading to potential compatibility issues. Ensuring consistent behavior across various browsers can be challenging.
+
+**_Performance Issues on Low-End Devices:_** CSR applications can be resource-intensive, causing performance problems on low-end devices or older browsers.
+
+**_Maintainability Challenges:_** As applications grow in complexity, managing the JavaScript codebase can become challenging. Without proper code organization and architecture, maintaining the application's codebase can be difficult.
+
+**_Load on Client Devices:_** CSR applications shift a significant portion of the processing load to the client devices. This can be a concern for users with older devices or limited resources.
+
+**_First Paint vs. Full Interaction:_** While some parts of the page might load quickly, the full interactivity of the application might be delayed until JavaScript has finished executing. This can create a perception of sluggishness.
+
+**_Security Concerns:_** Exposing critical application logic on the client side can potentially expose security vulnerabilities, as malicious users can inspect and manipulate JavaScript code.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='what_is_ssr'></a>
+
+### What is SSR?
+
+Server-Side Rendering (SSR) is a rendering approach in web development where the web server generates the complete HTML content of a web page and sends it to the client's browser. This means that the initial rendering of the page happens on the server side, and the client's browser receives a fully-rendered page that is ready to be displayed.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_ssr_work'></a>
+
+### How SSR Work?
+
+---
+
+1. **_Client Request:_**
+   When a user requests a specific web page by entering its URL or clicking a link, the request is sent to the server.
+
+2. **_Server-Side Processing:_**
+   On the server, the application logic executes. This can involve fetching data from databases or external APIs, processing the data, and generating the complete HTML content of the page.
+
+3. **_HTML Generation:_**
+   The server generates the HTML markup that represents the entire content of the requested page. This includes the structure of the page, the content, and any dynamic data that needs to be included.
+
+4. **_Sending HTML Response:_**
+   Once the HTML content is generated, the server sends this complete HTML response back to the client's browser.
+
+5. **_Client Display:_**
+   The client's browser receives the fully-rendered HTML page and can display it immediately. No additional rendering or data fetching is needed on the client side before the page is visible to the user.
+
+   [Go to top:arrow_up: ](#top)
+
+<a name='benifit_of_ssr'></a>
+
+### Benifits of SSR
+
+---
+
+**_Improved SEO:_**  
+Search engines can easily crawl and index the static HTML generated by SSR, leading to better search engine optimization. This helps your web pages rank higher in search results and improves discoverability.
+
+**_Faster Initial Page Load:_**
+With SSR, the server generates the complete HTML content, which is then sent to the client's browser. This means that users see a fully-rendered page more quickly compared to CSR, where additional data fetching and rendering are required on the client side.
+
+**_Better User Experience on Slow Connections:_**
+SSR provides a better user experience for users on slower internet connections. Since the server generates the HTML, users don't have to wait for JavaScript files or data to load before seeing content.
+
+**_Improved Performance on Low-End Devices:_**
+For users with low-end devices or devices with limited processing power, SSR can offer a more consistent and smoother experience compared to CSR, which might tax the client's resources.
+
+**_Accessibility Benefits:_**
+Static HTML generated through SSR can be more accessible to screen readers and assistive technologies, improving the overall accessibility of your web application.
+
+**_Social Media Sharing:_**
+Social media platforms and messaging apps often rely on the Open Graph protocol or similar meta tags to display content previews. SSR provides a reliable way to generate accurate previews when users share your links.
+
+**_Enhanced Security:_**
+Keeping sensitive application logic and data on the server side can provide an extra layer of security, as client-side code is more susceptible to tampering and reverse engineering.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='side_effect_of_ssr'></a>
+
+### Side effects of SSR
+
+---
+
+**Increased Server Load:**
+SSR places a higher load on the server compared to client-side rendering (CSR), as the server needs to generate the complete HTML content for each request. This can impact server scalability and resource utilization.
+
+**Complex Server-Side Logic:**
+Implementing SSR can involve complex server-side logic, including data fetching, template rendering, and potentially managing user sessions. This complexity can make development and maintenance more challenging.
+
+**Slower Subsequent Page Loads:**
+While the initial page load might be faster with SSR, subsequent page loads might be slower compared to CSR. This is because the server has to generate HTML for each request, potentially leading to higher response times.
+
+**Limited Client-Side Interactivity:**
+While SSR provides a faster initial page load, certain dynamic interactions that require real-time updates might still need to be handled using client-side JavaScript. This can lead to a disconnect between the initial loading speed and subsequent interactions.
+
+**SEO Dependency on Backend APIs:**
+While SSR can improve SEO, it still relies on backend APIs for data fetching. If the APIs have performance issues or are not well-optimized, it can negatively impact the overall SEO performance.
+
+**Complex Caching Strategies:**
+Implementing efficient caching strategies can be complex in SSR applications. Caching at the server level is essential to balance performance with accurate and up-to-date content.
+
+**Limited Browser Caching Benefits:**
+While SSR might reduce the need for client-side JavaScript, it doesn't eliminate it entirely. This means that browser caching benefits for JavaScript files are not as significant as in CSR.
+
+**Increased Initial Server Load:**
+During periods of high traffic, the server might experience increased load as it needs to generate HTML for each incoming request. This can lead to performance issues if not properly managed.
+
+**Limited Offline Support:**
+SSR does not inherently provide strong offline support like Progressive Web Apps (PWAs) or service workers. Users might still face difficulties accessing content when offline.
+
+**Server-Side Rendering Overhead:**
+Generating and sending HTML from the server can introduce additional network overhead, especially for larger pages.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='what_is_ssg'></a>
+
+### What is SSG?
+
+---
+
+Static Site Generation (SSG) is a rendering approach in web development where web pages are pre-rendered as static HTML files during the build process, rather than being generated dynamically when a user requests the page. This means that the content of the pages is generated at build time and doesn't change until the next build. SSG is particularly well-suited for content-heavy websites, blogs, e-commerce platforms, and other scenarios where the content doesn't change frequently.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_ssg_work'></a>
+
+### How Static Site Generation works?
+
+---
+
+**Build Process:**
+During the build process, the web application fetches data from various sources, like APIs or databases, and generates static HTML pages. This can be done using build tools, static site generators, or frameworks that support SSG.
+
+**Pre-Generated HTML:**
+The pre-generated HTML files represent the final content of each page. These files are ready to be served to users without any additional processing on the server or client side.
+
+**Server or CDN Hosting:**
+Once the HTML files are generated, they can be hosted on a server or content delivery network (CDN) for fast and efficient distribution to users.
+
+**User Access:**
+When a user requests a page, the server or CDN delivers the pre-generated HTML file directly to the user's browser. No server-side processing or client-side rendering is required to generate the content.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='benifit_of_ssg'></a>
+
+### Benefits of Static Site Generation:
+
+---
+
+**Fast Loading:** Since the HTML files are pre-generated and served directly to users, the initial page load is incredibly fast, providing an excellent user experience.
+
+**SEO Advantages:** Search engines can easily crawl and index static HTML pages, leading to improved search engine optimization (SEO).
+
+**Security:** Static sites can offer enhanced security since they don't involve dynamic server-side processing.
+
+**Scalability:** Static sites are highly scalable, as they can be served efficiently from CDNs, handling large amounts of traffic without straining the server.
+
+**Reduced Server Load:** Static sites offload the server from generating dynamic content for each request, reducing the server load.
+
+**Cost-Effective Hosting:** Hosting static sites on CDNs or static hosting platforms can be more cost-effective compared to traditional server hosting.
+
+**Offline Access:** Static sites can work offline, making them suitable for scenarios where internet connectivity is unreliable.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='what_is_isr'></a>
+
+### What is ISR?
+
+Incremental Static Regeneration (ISR) is a technique used in the context of Static Site Generation (SSG) to bring dynamic content to statically generated websites. It's a way to update specific parts of a static page without having to rebuild the entire site. This approach provides a balance between the benefits of static site generation (fast loading times, SEO) and the ability to display up-to-date information.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_isr_work'></a>
+
+### How Incremental Static Regeneration works?
+
+---
+
+**Initial Static Generation:**
+During the build process, static pages are pre-rendered just like in regular SSG. These static pages are then deployed and served to users.
+
+**Stale Data Pages:**
+After a certain time period or when triggered by specific events (e.g., an API call), the static pages become "stale" as the data they display might be outdated.
+
+**On-Demand Regeneration:**
+When a user requests a stale page, the server triggers a regeneration process for that specific page. Instead of rebuilding the entire site, only the requested page is regenerated with the latest data.
+
+**Serving Updated Page:**
+The newly generated page is served to the user, replacing the stale content with up-to-date information. This process happens dynamically and doesn't require rebuilding the entire site.
+
+**Caching and Time-to-Live (TTL):**
+To balance real-time updates with server load, ISR often involves setting a cache duration (Time-to-Live) for each page. After the cache expires, the next user request will trigger a regeneration to ensure the content stays fresh.
+
+[Go to top:arrow_up: ](#top)
+
+<a name='benifit_of_isr'></a>
+
+### Benefits of Incremental Static Regeneration
+
+---
+
+**Faster Updates:** ISR allows you to update specific pages with new data quickly, without needing to rebuild the entire site. This results in faster content updates for users.
+
+**Real-Time Information:** Users can access near real-time information without sacrificing the performance benefits of static site generation.
+
+**Reduced Server Load:** Unlike server-side rendering (SSR), ISR avoids the need to process every user request dynamically. This leads to reduced server load.
+
+**Improved User Experience:** Users get fresher content without encountering significant delays caused by dynamic server-side rendering.
+
+**SEO Benefits:** Updated content can still be indexed by search engines, maintaining the SEO advantages of static content.
+
+**Caching Control:** By setting cache durations, you can control the frequency of page regenerations, optimizing server load and user experience.
+
+### How to work next js with SSR, CSR, SSG, ISR
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_to_generate_static_from_server_and_cashed_in_brower'></a>
+
+### How to generate static from sever and chashed in brower
+
+---
+
+- সার্ভার সাইড রেন্ডারের ক্ষেত্রে ইউজার কর্তৃক কোন পেজে রিকোয়েস্ট করলে সেটি সার্ভার থেকে স্ট্যাটিক ফাইল তৈরী হয়ে ব্রাউজারে আসে এবং ক্যাশে জমা হয়।
+- সুতরাং যখনেই ইউজার যেকোন পেজ থেকে এই পেজে আসবে বাউজার থেকে সাথে প্রদর্শিত হবে যদি রিলোড দেওয়া না হয়।
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_to_create_static_file_in_sever_when_build'></a>
+
+### How to create static file in server when build
+
+---
+
+- যখন এপ্লিকেশন বিল্ড করা হয় তখন ডাইনামিক ডাটাযুক্ত অংশ ব্যতিত সকল পেজ নেক্সট জেএস স্ট্যাটিট ফাইল তৈরী করে সার্ভারে জমা করে যাতে ইউজার রিকোয়েস্ট করা মাত্র রেসপন্স হিসেবে ব্রাউজারে পাঠাতে পারে।
+- নিচের চিত্রে দেখানো হয়েছে- বিল্ড করার পর হোম পেজ এবং ব্লগ স্ট্যাটিক হিসেবে তৈরী হয়েছে।
+- এমনকি ব্লগ পেজে ডাটা ফেসিং করে তারপর স্ট্যাটিক করা হয়েছে।
+
+<img src='./images/b.png'>
+
+```js
+async function getData() {
+  const res = await fetch("https://dummyjson.com/products/?_limit=5");
+  return await res.json();
+}
+
+const page = async () => {
+  const data = await getData();
+  console.log(data);
+  return (
+    <div>
+      {data.products.map((phone) => {
+        return (
+          <div key={phone.id}>
+            <p>{phone.title}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default page;
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how_to_create_static_file_during_request_with_dynamic'></a>
+
+### How to create static file during request with dynamic
+
+---
+
+- এখানে আইডিযুক্ত পেজটি রান টাইমে স্ট্যাটিক এইচটিএমএল তৈরী করে ব্রাউজারে পাঠোবে। কারণ নেক্সট জেএস জানেনা ইউজার কর্তৃক এখন কোন আইটেমে ক্লিক তার ডাটা রিকোয়েক্ট করবে।
+
+<img src='./images/runTIme.png'>
+
+```js
+//blog.js
+import Link from "next/link";
+
+async function getData() {
+  const res = await fetch("https://dummyjson.com/products/?_limit=5");
+  return await res.json();
+}
+
+const page = async () => {
+  const data = await getData();
+
+  return (
+    <div>
+      {data.products.map((phone) => {
+        return (
+          <div key={phone.id}>
+            <Link href={`/blog/${phone.id}`}>
+              <p>{phone.title}</p>
+            </Link>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default page;
+```
+
+```js
+//[id].js
+const page = async ({ params }) => {
+  const { id } = params;
+  const res = await fetch(`https://dummyjson.com/products/${id}`);
+  const data = await res.json();
+
+  return (
+    <div>
+      <p>{data.description}</p>
+    </div>
+  );
+};
+
+export default page;
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='installation_of_next_js'></a>
 
 ### Installaion:
 
@@ -38,7 +476,7 @@
 
 ```js
 //install
-npx create-next-app@latest
+npx create-next-app
 
 //Run app
 npm run dev
@@ -46,6 +484,10 @@ npm run dev
 //Build app
 npm run build
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-use-image-from-public-directory'></a>
 
 ### Use image from public directory
 
@@ -64,6 +506,10 @@ const page = () => {
 
 export default page;
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how-use-global-css'></a>
 
 ### How to use global CSS ?
 
@@ -96,6 +542,10 @@ const page = () => {
 
 export default page;
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-use-module-css'></a>
 
 ### How to use module CSS ?
 
@@ -132,7 +582,13 @@ const Page = () => {
 export default Page;
 ```
 
+[Go to top:arrow_up: ](#top)
+
+<a name='rules-of-client-side-rendering'></a>
+
 ### Rules of client side rendering
+
+---
 
 - When use React functionality as useEffect, useState etc its client side rendering.
 - In client side rendering must write `use client` at upper.
@@ -156,6 +612,10 @@ const Page = () => {
 
 export default Page;
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='rules-of-server-side-rendering'></a>
 
 ### Rules of server side rendering
 
@@ -186,6 +646,10 @@ const page = async () => {
 };
 export default page;
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='rules-of-using-both-csr-and-ssr'></a>
 
 ### Rules of using both SSR & CSR
 
@@ -219,6 +683,10 @@ const page = async () => {
 export default page;
 ```
 
+[Go to top:arrow_up: ](#top)
+
+<a name='when-use-csr-and-when-use-ssr'></a>
+
 ### When use CSR and when use SSR?
 
 ---
@@ -246,6 +714,10 @@ export default page;
 - Using the `getServerSideProps` function for fetching data on the server-side before rendering the page.
 - Using the `getInitialProps` lifecycle method for fetching data on the server-side. Note that this method disables automatic static optimization, so use it only when necessary.
 
+[Go to top:arrow_up: ](#top)
+
+<a name='basic-routing'></a>
+
 ### Basic Routing
 
 ---
@@ -260,11 +732,19 @@ export default page;
 <img src='./images/segment1.png'>
 <img src='./images/segment2.png'>
 
+[Go to top:arrow_up: ](#top)
+
+<a name='nested-routing'></a>
+
 ### Nested Routing
 
 ---
 
 <img src='./images/NestedRouting.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-segment-in-routing'></a>
 
 ### How to skip segment in Routing/group rounting?
 
@@ -274,6 +754,10 @@ export default page;
 - Now in this picture your url:'http://localhost:3000/product/soap'
 
 <img src='./images/skipSlug.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='dynamic-routing'></a>
 
 ### Dynamic Routing
 
@@ -296,6 +780,10 @@ export default Page;
 ```
 
 <img src='./images//dynamicRouting.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='basic-link'></a>
 
 ### Basic Link
 
@@ -365,6 +853,10 @@ export default Menu;
 
 ```
 
+[Go to top:arrow_up: ](#top)
+
+<a name='use-next-progress-bar-libray'></a>
+
 ### Use next-nprogress-bar libray for showing loader
 
 ---
@@ -397,6 +889,10 @@ export default function RootLayout({ children }) {
   );
 }
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-style-active-link'></a>
 
 ### How to style active link?
 
@@ -450,6 +946,10 @@ const Menu = () => {
 
 export default Menu;
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='how-pass-query-string-with-link-and-how-to-receive'></a>
 
 ### How to Pass query string with link and how to receive?
 
@@ -527,6 +1027,10 @@ const page = () => {
 export default page;
 ```
 
+[Go to top:arrow_up: ](#top)
+
+<a name='link-replace-property'></a>
+
 ### Link - replace property
 
 ---
@@ -565,11 +1069,11 @@ const Menu = () => {
 export default Menu;
 ```
 
-### Link-prefetch property
+[Go to top:arrow_up: ](#top)
 
----
+<a name='what-is-use-router-hook'></a>
 
-### What is useRouter hook?
+### What is useRouter hook and detail about this methods?
 
 ---
 
@@ -624,6 +1128,10 @@ const page = () => {
 export default page;
 ```
 
+[Go to top:arrow_up: ](#top)
+
+<a name='master-layout-concept'></a>
+
 ### Master Layout concept
 
 ---
@@ -650,6 +1158,10 @@ export default function RootLayout({ children }) {
 
 <img src='./images/masterLayout.png' >
 
+[Go to top:arrow_up: ](#top)
+
+<a name='directory-based-layout'></a>
+
 ### Directory based layout
 
 - In directory create a file name `layout.js`
@@ -673,7 +1185,11 @@ export default Layout;
 
 <img src='./images/directoryLayout.png' >
 
-### Creating multiple root layout
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-create-multiple-root-layout'></a>
+
+### How to create multiple root layout
 
 ---
 
@@ -720,6 +1236,10 @@ export default ShopLayout;
 - In any group layout define `page.js` from homepage. e.g: in `marketing` create `page.js` this is homepage. so this work as homepage.
 - In `shop` define `cosemtics` segment so this work with url: '/cosmetics/
 
+[Go to top:arrow_up: ](#top)
+
+<a name='not-found-directory'></a>
+
 ### not-found directory
 
 ---
@@ -743,6 +1263,10 @@ export default NotFound;
 ```
 
 <img src='./images/notFoundPage.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='error-directory'></a>
 
 ### error.js directory
 
@@ -773,6 +1297,10 @@ export default page;
 
 <img src='./images/errorPage.png'>
 
+[Go to top:arrow_up: ](#top)
+
+<a name='loading-directory'></a>
+
 ### loading.js directive
 
 ---
@@ -784,6 +1312,10 @@ export default page;
 - Its working as app root directory for whole application or specific directory.
 
 <img src='./images/loading.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='route-directory'></a>
 
 ### route.js directory
 
@@ -810,6 +1342,10 @@ export const GET = async () => {
 
 <img src='./images/route.png'>
 
+[Go to top:arrow_up: ](#top)
+
+<a name='process-of-data-fatching-by-ssr'></a>
+
 ### Process of Data fetching by SSR
 
 ---
@@ -826,6 +1362,10 @@ const Page = async () => {
 
 export default Page;
 ```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='process-of-data-fatching-by-csr'></a>
 
 ### Process of Data fetching by CSR
 
@@ -849,360 +1389,17 @@ const page = () => {
 export default page;
 ```
 
-### What is rendering in web application ?
+[Go to top:arrow_up: ](#top)
+
+<a name='data-fatching-by-synchronous-way'></a>
+
+### Data factching by sychronous way
 
 ---
 
-Rendering in the context of web applications refers to the process of generating the final output, usually in the form of HTML, CSS, and JavaScript, that is displayed in a web browser. It involves taking raw data, templates, and dynamic content, and converting them into a format that can be visually presented to users.
-
-There are two main types of rendering in web applications:
-
-- CSR - Client side rendering
-- SSR - Server side rendering
-  - SSG - Static site generation
-  - ISR - Incremental Static Regeneration
-
-### What is CSR? How its work?
+### Synchronous way
 
 ---
-
-**_What is CSR?_**
-
-- Client-side rendering (CSR) is an approach in web development where the rendering of content, including HTML, CSS, and data, is primarily handled by the web browser on the client's device using JavaScript.
-- This means that the initial HTML sent by the server is minimal, often just containing the basic structure and references to JavaScript files.
-- The browser then fetches data from APIs or other sources, processes it, and dynamically generates the content on the client side.
-
-**_How CSR work?_**
-
-Here's a step-by-step breakdown of how client-side rendering works with an example:
-
-_Initial Page Load:_
-
-- When a user enters a URL or clicks a link to a web page, the server sends a minimal HTML document to the browser as below:
-- This HTML document typically includes the basic structure of the page, along with references to external CSS and JavaScript files.
-
-```jsx
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Client-Side Rendering Example</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="app"></div>
-    <script src="app.js"></script>
-</body>
-</html>
-
-```
-
-_JavaScript Execution:_
-
-- The browser then starts executing the JavaScript code referenced in the HTML document.
-- This JavaScript code is responsible for fetching data from APIs, processing that data, and rendering it on the page.
-
-_Data Processing and Rendering:_
-
-- Once the data is fetched, the JavaScript code processes it and generates the necessary HTML dynamically.
-- This HTML is then inserted into the DOM (Document Object Model) of the page.
-
-_User Interaction:_
-
-- As the user interacts with the page, such as marking tasks as complete or adding new tasks, the JavaScript code handles these interactions by updating the DOM and possibly making additional API requests.
-
-**_Benifit of CSR:_**
-
-**_Interactive User Experience:_** CSR allows for highly interactive and dynamic user experiences. Changes to the content can be made without requiring a full page reload, providing a smoother and more seamless interaction.
-
-**_Reduced Server Load:_** Since much of the rendering process happens on the client side, the server is not burdened with generating HTML for every request. This can lead to better server scalability and reduced server load.
-
-**_Faster Subsequent Page Loads:_** Once the initial JavaScript files are cached by the browser, subsequent page loads can be faster since the client doesn't need to fetch those files again.
-
-**_Enhanced Caching:_** Modern browsers are capable of caching JavaScript files, CSS, and other assets. This means that after the initial load, users can benefit from faster load times for subsequent visits.
-
-**_Offline Capabilities:_** With appropriate design and use of service workers, CSR applications can work offline or in low-network conditions. Users can still access content and perform tasks even without a stable internet connection.
-
-**_Dynamic Data Fetching:_** CSR is well-suited for applications that rely heavily on dynamic data, as it allows for efficient fetching and updating of data without requiring full page reloads.
-
-**_Flexibility:_** Developers have more control over the rendering process and can implement custom animations, transitions, and other visual effects more easily.
-
-## Side effects of CSR
-
----
-
-**_Slower Initial Load Times:_** One of the most significant side effects of CSR is slower initial page load times. Since the browser needs to fetch JavaScript files and potentially make additional API requests before rendering content, the user might experience a delay in seeing the page's complete content.
-
-**_Search Engine Optimization (SEO) Challenges:_** Search engines often struggle to index content generated dynamically through JavaScript. This can negatively impact the discoverability of your website's content in search engine results.
-
-**_User Experience During Loading:_** During the initial load, users might see a blank or partially rendered page until the JavaScript files are fetched and executed. This can result in a poor user experience and confusion for users.
-
-**_Browser Compatibility:_** Different browsers might interpret JavaScript code differently, leading to potential compatibility issues. Ensuring consistent behavior across various browsers can be challenging.
-
-**_Performance Issues on Low-End Devices:_** CSR applications can be resource-intensive, causing performance problems on low-end devices or older browsers.
-
-**_Maintainability Challenges:_** As applications grow in complexity, managing the JavaScript codebase can become challenging. Without proper code organization and architecture, maintaining the application's codebase can be difficult.
-
-**_Load on Client Devices:_** CSR applications shift a significant portion of the processing load to the client devices. This can be a concern for users with older devices or limited resources.
-
-**_First Paint vs. Full Interaction:_** While some parts of the page might load quickly, the full interactivity of the application might be delayed until JavaScript has finished executing. This can create a perception of sluggishness.
-
-**_Security Concerns:_** Exposing critical application logic on the client side can potentially expose security vulnerabilities, as malicious users can inspect and manipulate JavaScript code.
-
-### What is SSR? How its work?
-
-Server-Side Rendering (SSR) is a rendering approach in web development where the web server generates the complete HTML content of a web page and sends it to the client's browser. This means that the initial rendering of the page happens on the server side, and the client's browser receives a fully-rendered page that is ready to be displayed.
-
-Here's how SSR works with an example:
-
-1. **_Client Request:_**
-   When a user requests a specific web page by entering its URL or clicking a link, the request is sent to the server.
-
-2. **_Server-Side Processing:_**
-   On the server, the application logic executes. This can involve fetching data from databases or external APIs, processing the data, and generating the complete HTML content of the page.
-
-3. **_HTML Generation:_**
-   The server generates the HTML markup that represents the entire content of the requested page. This includes the structure of the page, the content, and any dynamic data that needs to be included.
-
-4. **_Sending HTML Response:_**
-   Once the HTML content is generated, the server sends this complete HTML response back to the client's browser.
-
-5. **_Client Display:_**
-   The client's browser receives the fully-rendered HTML page and can display it immediately. No additional rendering or data fetching is needed on the client side before the page is visible to the user.
-
-   ### Benifits of SSR
-
-   ***
-
-**_Improved SEO:_**  
-Search engines can easily crawl and index the static HTML generated by SSR, leading to better search engine optimization. This helps your web pages rank higher in search results and improves discoverability.
-
-**_Faster Initial Page Load:_**
-With SSR, the server generates the complete HTML content, which is then sent to the client's browser. This means that users see a fully-rendered page more quickly compared to CSR, where additional data fetching and rendering are required on the client side.
-
-**_Better User Experience on Slow Connections:_**
-SSR provides a better user experience for users on slower internet connections. Since the server generates the HTML, users don't have to wait for JavaScript files or data to load before seeing content.
-
-**_Improved Performance on Low-End Devices:_**
-For users with low-end devices or devices with limited processing power, SSR can offer a more consistent and smoother experience compared to CSR, which might tax the client's resources.
-
-**_Accessibility Benefits:_**
-Static HTML generated through SSR can be more accessible to screen readers and assistive technologies, improving the overall accessibility of your web application.
-
-**_Social Media Sharing:_**
-Social media platforms and messaging apps often rely on the Open Graph protocol or similar meta tags to display content previews. SSR provides a reliable way to generate accurate previews when users share your links.
-
-**_Enhanced Security:_**
-Keeping sensitive application logic and data on the server side can provide an extra layer of security, as client-side code is more susceptible to tampering and reverse engineering.
-
-### Side effects of SSR
-
----
-
-**Increased Server Load:**
-SSR places a higher load on the server compared to client-side rendering (CSR), as the server needs to generate the complete HTML content for each request. This can impact server scalability and resource utilization.
-
-**Complex Server-Side Logic:**
-Implementing SSR can involve complex server-side logic, including data fetching, template rendering, and potentially managing user sessions. This complexity can make development and maintenance more challenging.
-
-**Slower Subsequent Page Loads:**
-While the initial page load might be faster with SSR, subsequent page loads might be slower compared to CSR. This is because the server has to generate HTML for each request, potentially leading to higher response times.
-
-**Limited Client-Side Interactivity:**
-While SSR provides a faster initial page load, certain dynamic interactions that require real-time updates might still need to be handled using client-side JavaScript. This can lead to a disconnect between the initial loading speed and subsequent interactions.
-
-**SEO Dependency on Backend APIs:**
-While SSR can improve SEO, it still relies on backend APIs for data fetching. If the APIs have performance issues or are not well-optimized, it can negatively impact the overall SEO performance.
-
-**Complex Caching Strategies:**
-Implementing efficient caching strategies can be complex in SSR applications. Caching at the server level is essential to balance performance with accurate and up-to-date content.
-
-**Limited Browser Caching Benefits:**
-While SSR might reduce the need for client-side JavaScript, it doesn't eliminate it entirely. This means that browser caching benefits for JavaScript files are not as significant as in CSR.
-
-**Increased Initial Server Load:**
-During periods of high traffic, the server might experience increased load as it needs to generate HTML for each incoming request. This can lead to performance issues if not properly managed.
-
-**Limited Offline Support:**
-SSR does not inherently provide strong offline support like Progressive Web Apps (PWAs) or service workers. Users might still face difficulties accessing content when offline.
-
-**Server-Side Rendering Overhead:**
-Generating and sending HTML from the server can introduce additional network overhead, especially for larger pages.
-
-### What is SSG?
-
----
-
-Static Site Generation (SSG) is a rendering approach in web development where web pages are pre-rendered as static HTML files during the build process, rather than being generated dynamically when a user requests the page. This means that the content of the pages is generated at build time and doesn't change until the next build. SSG is particularly well-suited for content-heavy websites, blogs, e-commerce platforms, and other scenarios where the content doesn't change frequently.
-
-### How Static Site Generation works?
-
-**Build Process:**
-During the build process, the web application fetches data from various sources, like APIs or databases, and generates static HTML pages. This can be done using build tools, static site generators, or frameworks that support SSG.
-
-**Pre-Generated HTML:**
-The pre-generated HTML files represent the final content of each page. These files are ready to be served to users without any additional processing on the server or client side.
-
-**Server or CDN Hosting:**
-Once the HTML files are generated, they can be hosted on a server or content delivery network (CDN) for fast and efficient distribution to users.
-
-**User Access:**
-When a user requests a page, the server or CDN delivers the pre-generated HTML file directly to the user's browser. No server-side processing or client-side rendering is required to generate the content.
-
-### Benefits of Static Site Generation:
-
----
-
-**Fast Loading:** Since the HTML files are pre-generated and served directly to users, the initial page load is incredibly fast, providing an excellent user experience.
-
-**SEO Advantages:** Search engines can easily crawl and index static HTML pages, leading to improved search engine optimization (SEO).
-
-**Security:** Static sites can offer enhanced security since they don't involve dynamic server-side processing.
-
-**Scalability:** Static sites are highly scalable, as they can be served efficiently from CDNs, handling large amounts of traffic without straining the server.
-
-**Reduced Server Load:** Static sites offload the server from generating dynamic content for each request, reducing the server load.
-
-**Cost-Effective Hosting:** Hosting static sites on CDNs or static hosting platforms can be more cost-effective compared to traditional server hosting.
-
-**Offline Access:** Static sites can work offline, making them suitable for scenarios where internet connectivity is unreliable.
-
-### What is ISR?
-
-Incremental Static Regeneration (ISR) is a technique used in the context of Static Site Generation (SSG) to bring dynamic content to statically generated websites. It's a way to update specific parts of a static page without having to rebuild the entire site. This approach provides a balance between the benefits of static site generation (fast loading times, SEO) and the ability to display up-to-date information.
-
-### How Incremental Static Regeneration works?
-
----
-
-**Initial Static Generation:**
-During the build process, static pages are pre-rendered just like in regular SSG. These static pages are then deployed and served to users.
-
-**Stale Data Pages:**
-After a certain time period or when triggered by specific events (e.g., an API call), the static pages become "stale" as the data they display might be outdated.
-
-**On-Demand Regeneration:**
-When a user requests a stale page, the server triggers a regeneration process for that specific page. Instead of rebuilding the entire site, only the requested page is regenerated with the latest data.
-
-**Serving Updated Page:**
-The newly generated page is served to the user, replacing the stale content with up-to-date information. This process happens dynamically and doesn't require rebuilding the entire site.
-
-**Caching and Time-to-Live (TTL):**
-To balance real-time updates with server load, ISR often involves setting a cache duration (Time-to-Live) for each page. After the cache expires, the next user request will trigger a regeneration to ensure the content stays fresh.
-
-### Benefits of Incremental Static Regeneration
-
----
-
-**Faster Updates:** ISR allows you to update specific pages with new data quickly, without needing to rebuild the entire site. This results in faster content updates for users.
-
-**Real-Time Information:** Users can access near real-time information without sacrificing the performance benefits of static site generation.
-
-**Reduced Server Load:** Unlike server-side rendering (SSR), ISR avoids the need to process every user request dynamically. This leads to reduced server load.
-
-**Improved User Experience:** Users get fresher content without encountering significant delays caused by dynamic server-side rendering.
-
-**SEO Benefits:** Updated content can still be indexed by search engines, maintaining the SEO advantages of static content.
-
-**Caching Control:** By setting cache durations, you can control the frequency of page regenerations, optimizing server load and user experience.
-
-### How to work next js with SSR, CSR, SSG, ISR
-
-**How to generate static from sever and chashed in brower**
-
-- সার্ভার সাইড রেন্ডারের ক্ষেত্রে ইউজার কর্তৃক কোন পেজে রিকোয়েস্ট করলে সেটি সার্ভার থেকে স্ট্যাটিক ফাইল তৈরী হয়ে ব্রাউজারে আসে এবং ক্যাশে জমা হয়।
-- সুতরাং যখনেই ইউজার যেকোন পেজ থেকে এই পেজে আসবে বাউজার থেকে সাথে প্রদর্শিত হবে যদি রিলোড দেওয়া না হয়।
-
-**How to create static file in server when build**
-
-- যখন এপ্লিকেশন বিল্ড করা হয় তখন ডাইনামিক ডাটাযুক্ত অংশ ব্যতিত সকল পেজ নেক্সট জেএস স্ট্যাটিট ফাইল তৈরী করে সার্ভারে জমা করে যাতে ইউজার রিকোয়েস্ট করা মাত্র রেসপন্স হিসেবে ব্রাউজারে পাঠাতে পারে।
-- নিচের চিত্রে দেখানো হয়েছে- বিল্ড করার পর হোম পেজ এবং ব্লগ স্ট্যাটিক হিসেবে তৈরী হয়েছে।
-- এমনকি ব্লগ পেজে ডাটা ফেসিং করে তারপর স্ট্যাটিক করা হয়েছে।
-
-<img src='./images/b.png'>
-
-```js
-async function getData() {
-  const res = await fetch("https://dummyjson.com/products/?_limit=5");
-  return await res.json();
-}
-
-const page = async () => {
-  const data = await getData();
-  console.log(data);
-  return (
-    <div>
-      {data.products.map((phone) => {
-        return (
-          <div key={phone.id}>
-            <p>{phone.title}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-export default page;
-```
-
-**How to create static file during request with dynamic**
-
-- এখানে আইডিযুক্ত পেজটি রান টাইমে স্ট্যাটিক এইচটিএমএল তৈরী করে ব্রাউজারে পাঠোবে। কারণ নেক্সট জেএস জানেনা ইউজার কর্তৃক এখন কোন আইটেমে ক্লিক তার ডাটা রিকোয়েক্ট করবে।
-
-<img src='./images/runTIme.png'>
-
-```js
-//blog.js
-import Link from "next/link";
-
-async function getData() {
-  const res = await fetch("https://dummyjson.com/products/?_limit=5");
-  return await res.json();
-}
-
-const page = async () => {
-  const data = await getData();
-
-  return (
-    <div>
-      {data.products.map((phone) => {
-        return (
-          <div key={phone.id}>
-            <Link href={`/blog/${phone.id}`}>
-              <p>{phone.title}</p>
-            </Link>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-export default page;
-```
-
-```js
-//[id].js
-const page = async ({ params }) => {
-  const { id } = params;
-  const res = await fetch(`https://dummyjson.com/products/${id}`);
-  const data = await res.json();
-
-  return (
-    <div>
-      <p>{data.description}</p>
-    </div>
-  );
-};
-
-export default page;
-```
-
-### Data factching
-
----
-
-**_Synchronous way_**
 
 ```js
 const getUser = async () => {
@@ -1243,7 +1440,13 @@ const page = async () => {
 export default page;
 ```
 
-**Peralal data fatching**
+[Go to top:arrow_up: ](#top)
+
+<a name='data-fatching-by-peralal'></a>
+
+## Peralal data fatching
+
+---
 
 - Same time fatch data
 
@@ -1288,9 +1491,11 @@ const page = async () => {
 export default page;
 ```
 
-### next.config.js
+[Go to top:arrow_up: ](#top)
 
-### How to use basepath?
+<a name='how-to-use-basePath'></a>
+
+### next.config - How to use basepath?
 
 ---
 
@@ -1302,7 +1507,11 @@ const nextConfig = {
 //http://localhost:3000/basePathName
 ```
 
-### How to use env?
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-use-env'></a>
+
+### next.config - How to use env?
 
 ---
 
@@ -1320,7 +1529,11 @@ const getUser = async () => {
 };
 ```
 
-## How to set response headers?
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-set-response-header'></a>
+
+## next.config - How to set response headers?
 
 - determine single path or whole application by `source: "/:path*"`
 
@@ -1344,7 +1557,11 @@ const nextConfig = {
 
 <img src='./images/responseheaders.png'>
 
-## How to set X-Frame option header?
+[Go to top:arrow_up: ](#top)
+
+<a name='how-to-set-x-frame'></a>
+
+## next.config - How to set X-Frame option header?
 
 ---
 
