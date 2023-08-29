@@ -70,6 +70,19 @@
 | 65. | [OPTIMIZATION - SCRIPT OPTIMIZATION](#SCRIPT) |
 | 66. | [OPTIMIZATION - STATIC ASSETS OPTIMIZATION](#STATIC-ASSETS) |
 | 67. | [OPTIMIZATION - Lazy Loading OPTIMIZATION](#LAZY-LOADING) |
+| 68. | [Backend - simple request and response](#simple-request-and-response) |
+| 69. | [Backend - Working with request url params](#Working-with-request-url-params) |
+| 70. | [Backend - Working with request body with json data](#Working-with-request-body-with-json-data) |
+| 71. | [Backend - Working with request body with formData](#Working-with-request-body-with-formData) |
+| 72. | [Backend - Working with request headers](#Working-with-request-headers) |
+| 73. | [Backend - How to set custom status code/](#How-to-set-custom-status-code) |
+| 74. | [Backend - How to set cookies in headers with response?](#set-cookies-in-headers-with-response) |
+| 75. | [Backend - How to set token in headers with response?](#set-token-in-headers-with-response) |
+| 76. | [Backend - How to redirect?](#How-to-redirect) |
+| 77. | [Middleware - Apply Mutiple path in middleware](#Apply-Mutiple-path-in-middleware) |
+| 78. | [Middleware - Conditional statement on middleware.js](#Conditional-statement-on-middleware) |
+| 79. | [Middleware - Setting Header with Request in middleware.js](#Setting-Header-with-Request-in-middleware) |
+| 80. | [Middleware - Setting Header with response in middleware.js](#Setting-Header-with-response-in-middleware) |
 
 <a name='rendering'></a>
 
@@ -1781,5 +1794,330 @@ const nextConfig = {
 ---
 
 <img src='./images/lazyLoading.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='simple-request-and-response'></a>
+
+### Backend - simple request and response
+
+---
+
+```js
+//api/profile/route.js
+//localhost://3000/api/profile
+import { NextResponse } from "next/server";
+
+export async function GET(req, res) {
+  return NextResponse.json({ message: "I am GET Method" });
+}
+export async function POST(req, res) {
+  return NextResponse.json({ message: "I am POST Method" });
+}
+export async function PUT(req, res) {
+  return NextResponse.json({ message: "I am PUT Method" });
+}
+export async function DELETE(req, res) {
+  return NextResponse.json({ message: "I am DELETE Method" });
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Working-with-request-url-params'></a>
+
+### Backend - Working with request url params
+
+---
+
+```js
+//URL={{BASE_URL}}/profile?id=3456&userName=Anamul Haque
+import { NextResponse } from "next/server";
+
+export async function GET(req, res) {
+  const { searchParams } = new URL(req.url); //Create new URL with passing req url and destructure searchParams form URL
+  const id = searchParams.get("id");         //Receive id and name from params
+  const name = searchParams.get("userName");
+  return NextResponse.json({ id: id, name: name });
+}
+// Result
+{
+    "id": "3456",
+    "name": "Anamul Haque"
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Working-with-request-body-with-json-data'></a>
+
+### Backend - Working with request body with json data
+
+```js
+import { NextResponse } from "next/server";
+
+export async function POST(req, res) {
+  const body = await req.json(); //return json object
+  const name = body.name;
+  const age = body.age;
+  return NextResponse.json({ name: name, age: age });
+}
+//Result:
+{
+    "name": "Anamul Haque",
+    "age": 30
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Working-with-request-body-with-formData'></a>
+
+### Backend - Working with request body with formData
+
+```js
+import { NextResponse } from "next/server";
+
+export async function POST(req, res) {
+  const body = await req.formData();
+  const name = body.get("name");
+  const age = body.get("age");
+  return NextResponse.json({ name: name, age: age });
+}
+//Result:
+{
+    "name": "Anamul Haque",
+    "age": 30
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Working-with-request-headers'></a>
+
+### Backend - Working with request headers
+
+```js
+import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+
+export async function GET(req, res) {
+  const headersList = headers();
+  const token = headersList.get("Authorization");
+  return NextResponse.json({ token });
+}
+```
+
+<img src='./images//headers.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Working-with-request-cookies'></a>
+
+### Backend - Working with request cookies
+
+**_Set cookies in postmen_**
+
+- Click cookies.
+- Add domain name as 'http://localhost:3000/api'
+- Finally set cookie as below image:
+  <img src='./images/cookie.png'>
+
+**_Receive cookie_**
+
+```js
+import { NextResponse } from "next/server";
+
+export async function GET(req, res) {
+  const Token = req.cookies.get("Token");
+  return NextResponse.json({ Token });
+}
+//Result:
+{
+    "Token": {
+        "name": "Token",
+        "value": "XYZ-123"
+    }
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='How-to-set-custom-status-code'></a>
+
+### Backend - How to set custom status code
+
+--
+
+```js
+import { NextResponse } from "next/server";
+
+export async function GET(req, res) {
+  return NextResponse.json({ Message: "Hello world" }, { status: 500 }); //As separate object
+}
+
+//If respone body array of object
+return NextResponse.json(
+  [{ Message: "Hello world" }, { msg2: "Hello second message" }],
+  { status: 500 }
+);
+```
+
+<img src='./images/status.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='set-cookies-in-headers-with-response'></a>
+
+### Backend - How to set cookies in headers with response
+
+```js
+import { NextResponse } from "next/server";
+
+export async function POST(req, res) {
+  return NextResponse.json(
+    { status: true, message: "Request completed" },
+    {
+      status: 201,
+      headers: { "Set-Cookie": `token=XYZ-123-ABC; Path=/` },
+    }
+  );
+}
+```
+
+<img src='./images//setCookies.png'>
+
+[Go to top:arrow_up: ](#top)
+
+<a name='set-token-in-headers-with-response'></a>
+
+### Backend - How to set token in headers with response
+
+```js
+import { NextResponse } from "next/server";
+
+export async function POST(req, res) {
+  return NextResponse.json(
+    { status: true, message: "Request completed" },
+    {
+      status: 201,
+      headers: { token: "XYZ-123" },
+    }
+  );
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='How-to-red-rect'></a>
+
+### Backend - How to redirect
+
+```js
+import { redirect } from "next/navigation";
+
+export async function GET(req, res) {
+  redirect("/");
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Apply-Mutiple-path-in-middleware'></a>
+
+### Apply Mutiple path in middleware.js
+
+- middleware.js is app root directory.
+
+```js
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+
+export function middleware(req) {
+  console.log("I am middleware ");
+  console.log(req.method);
+  console.log(req.url);
+  return NextResponse.next();
+}
+export const config = {
+  matcher: ["/about/:path*", "/dashboard/:path*"],
+};
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Conditional-statement-on-middleware'></a>
+
+### Conditional statement on middleware.js
+
+```js
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+
+export function middleware(req) {
+  if (req.nextUrl.pathname.startsWith("/api/example1")) {
+    console.log("example1");
+    return NextResponse.next();
+  }
+  if (req.nextUrl.pathname.startsWith("/api/example2")) {
+    console.log("example2");
+    return NextResponse.next();
+  }
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Setting-Header-with-Request-in-middleware'></a>
+
+### Setting Header with Request in middleware.js
+
+```js
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+
+export function middleware(req) {
+  if (req.nextUrl.pathname.startsWith("/api/example1")) {
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("Token", "example1-XYZ-ABC");
+
+    return NextResponse.next({
+      request: { headers: requestHeaders },
+    });
+  }
+  if (req.nextUrl.pathname.startsWith("/api/example2")) {
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("Token", "example2-XYZ-ABC");
+
+    return NextResponse.next({
+      request: { headers: requestHeaders },
+    });
+  }
+}
+```
+
+[Go to top:arrow_up: ](#top)
+
+<a name='Setting-Header-with-response-in-middleware'></a>
+
+### Setting Header with response in middleware.js
+
+```js
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+
+export function middleware(req, res) {
+  if (req.nextUrl.pathname.startsWith("/api/example1")) {
+    const response = NextResponse.next();
+    response.headers.set("Token", "example1-XYZ-ABC");
+    return response;
+  }
+  if (req.nextUrl.pathname.startsWith("/api/example2")) {
+    const response = NextResponse.next();
+    response.headers.set("Token", "example2-XYZ-ABC");
+    return response;
+  }
+}
+```
 
 [Go to top:arrow_up: ](#top)
